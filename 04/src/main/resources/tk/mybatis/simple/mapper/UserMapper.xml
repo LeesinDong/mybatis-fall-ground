@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tk.mybatis.simple.mapper.UserMapper">
+
+    <resultMap id="baseResultMap" type="tk.mybatis.simple.model.SysUser">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_password" property="userPassword"/>
+        <result column="user_email" property="userEmail"/>
+        <result column="user_info" property="userInfo"/>
+
+        <result column="head_img" property="headImg" jdbcType="BLOB"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id = "selectByUser" resultType="tk.mybatis.simple.model.SysUser">
+<!--    <select id = "selectByUser" resultMap = "baseResultMap">-->
+        select id,
+         user_name  userName,
+         user_password userPassword,
+         user_email userEmail,
+         user_info userInfo,
+         head_img headImg,
+        create_time createTime
+        from sys_user
+        where 1 = 1
+        <if test="userName != null and userName != ''">
+            and user_name like concat('%', #{userName}, '%')
+        </if>
+        <if test="userEmail != null and userEmail != ''">
+            and user_email = #{userEmail}
+        </if>
+    </select>
+</mapper>
