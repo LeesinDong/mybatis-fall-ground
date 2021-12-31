@@ -1,6 +1,5 @@
 package tk.mybatis.simple.mapper;
 
-
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.simple.model.SysUser;
 
@@ -30,4 +29,6 @@ public interface UserMapper {
     int insertList(@Param("list")List<SysUser> sysUser);
 
     int updateByMap(Map<String, Object> map);
+
+    SysUser selectUserAndRoleByIdSelect(Long id);
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tk.mybatis.simple.mapper.RoleMapper">
+
+    <resultMap id="roleMap" type="SysRole">
+        <id column="id" property="id"/>
+        <result column="role_name" property="roleName"/>
+        <result column="enabled" property="enabled"/>
+    </resultMap>
+
+    <select id="selectRoleById" resultMap="rolePrivilegeListMapSelect">
+        select * from sys_role where id=#{id}
+    </select>
+
+    <resultMap id = "rolePrivilegeListMapSelect" type="SysRole"  extends="tk.mybatis.simple.mapper.RoleMapper.roleMap">
+        <collection property="privilegeList"
+                    column="{roleId=id}"
+                select="tk.mybatis.simple.mapper.PrivilegeMapper.selectPrivilege"/>
+    </resultMap>
+
+    <update id = "update">
+        update sys_role set enabled=#{enabled} where id = #{id};
+    </update>
+</mapper>
